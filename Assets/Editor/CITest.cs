@@ -8,12 +8,14 @@ namespace Tests
 {
     public class CITest
     {
+        //Always passes
         [Test]
         public void PassingTest()
         {
             Assert.Pass();
         }
 
+        //Always fails
         [Test]
         public void FailingTest()
         {
