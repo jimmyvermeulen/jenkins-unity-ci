@@ -34,15 +34,15 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         MoveForward(speed * Time.deltaTime);
-        if (Input.GetKeyDown(KeyCode.A))
+        if (DecoupledInput.GetKeyDown(KeyCode.A))
         {
             MoveLeft();
         }
-        else if (Input.GetKeyDown(KeyCode.D))
+        else if (DecoupledInput.GetKeyDown(KeyCode.D))
         {
             MoveRight();
         }
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (DecoupledInput.GetKeyDown(KeyCode.Space))
         {
             Jump();
         }
