@@ -9,7 +9,10 @@ public class CrashObject : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        OnCrashedInto?.Invoke();
-        Destroy(gameObject);
+        if (other.tag == "Player")
+        {
+            OnCrashedInto?.Invoke();
+            Destroy(gameObject);
+        }
     }
 }

@@ -7,6 +7,10 @@ public class PlayerMovement : MonoBehaviour
     public enum Lane { Left, Center, Right};
     private Lane playerLane = Lane.Center;
     [SerializeField]
+    float jumpHeight = 1.5f;
+    [SerializeField]
+    float jumpSpeed = 1f;
+    [SerializeField]
     float speed;
     [SerializeField]
     Dictionary<Lane, float> LanePositions = 
@@ -16,6 +20,8 @@ public class PlayerMovement : MonoBehaviour
             {Lane.Center, 0f},
             {Lane.Right, 1.5f},
         };
+    bool jumping = false;
+    bool goingUP = false;
 
 
     // Start is called before the first frame update
@@ -35,6 +41,14 @@ public class PlayerMovement : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.D))
         {
             MoveRight();
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Jump();
+        }
+        if (jumping)
+        {
+            Jumping();
         }
     }
 
@@ -71,6 +85,34 @@ public class PlayerMovement : MonoBehaviour
     void SetPlayerLane(Lane lane)
     {
         playerLane = lane;
-        transform.position = new Vector3(LanePositions[lane], transform.position.y);
+        transform.position = new Vector3(LanePositions[lane], transform.position.y, transform.position.z);
+    }
+
+    void Jump()
+    {
+        jumping = true;
+        goingUP = true;
+        Jumping();
+    }
+
+    public void Jumping()
+    {
+        if (goingUP)
+        {
+            transform.position += new Vector3(0, jumpSpeed * Time.deltaTime, 0);
+            if(transform.position.y >= jumpHeight)
+            {
+                goingUP = false;
+            }
+        }
+        else if (transform.position.y > 0.5)
+        {
+            transform.position -= new Vector3(0, jumpSpeed * Time.deltaTime, 0);
+        }
+        else
+        {
+            jumping = false;
+            transform.position = new Vector3(transform.position.x, 0.5f, transform.position.z);
+        }
     }
 }
